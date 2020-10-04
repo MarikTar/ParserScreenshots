@@ -25,14 +25,21 @@ body
     height: 100%
     vertical-align: middle
 
-.actionBtn
+.actionBtn,
+.actionCollapse
   vertical-align: middle
   max-width: 300px
   width: 40%
   display: inline-block
   height: 30px
+  cursor: pointer
   &:first-child
     margin-right: 30px
+
+.actionCollapse
+  max-width: none
+  width: 100%
+  margin: 20px 0
 
 .content
   height: calc(100% -  50px)
@@ -57,9 +64,21 @@ body
   text-align: center
   padding: 10px 20px
 
-.title
+.title,
+.page,
+.date_container
   text-align: left
   line-height: 20px
+  display: inline-block
+  vertical-align: top
+
+.page,
+.date_container
+  width: 130px
+  margin-left: 20px
+
+.title
+  width: calc( 100% - 300px)
 
 .screenshot
   width: 100%
