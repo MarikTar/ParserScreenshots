@@ -15,23 +15,52 @@ const switchView = (showField: HTMLElement, hideField: HTMLElement) => {
   hideField.hidden = true;
 }
 
+interface IPageDate {
+  page: string,
+  date: string,
+  time: string,
+  url: string,
+};
+
 interface IGroupParseDate {
-  [key: string]: [{
-    page: string,
-    date: string,
-    time: string,
-    url: string,
-  }];
+  [key: string]: IPageDate[];
 };
 
 interface IParseDate {
   [key: string]: IGroupParseDate;
 };
 
+const sortFromPage = (arr: IPageDate[]): IPageDate[] => {
+  const firstArr = [];
+  const secArr = [];
+  for (let i = 0; i < arr.length; i += 1) {
+    if (arr[i].page === arr[i + 1]?.page) {
+      secArr.push(arr[i + 1])
+    } else {
+      firstArr.push(arr[i])
+    }
+  }
+  return [...firstArr, ...secArr];
+}
+
+const enumerationOfData = (obj:IParseDate): IParseDate => {
+  const keys = Object.keys(obj);
+  for (let i = 0; i < keys.length; i+=1) {
+    const scenariosName = keys[i]
+    const keysOfScenarios = Object.keys(obj[scenariosName]);
+    for (let j = 0; j < keysOfScenarios.length; j+=1) {
+      const keyOfDescription = Object.keys(obj[scenariosName])[0];
+      obj[scenariosName][keyOfDescription] = sortFromPage(obj[scenariosName][keyOfDescription])
+    }
+  }
+
+  return obj
+}
+
 const parseData = (): IParseDate => {
   const input = inputField as HTMLInputElement;
   const getArrayURLs = input.value.match(/https:.+\.png/g);
-  const sortedScreenshots = {};
+  const sortedScreenshots: IParseDate = {};
 
   for (let i = 0; i < getArrayURLs.length; i += 1) {
     const name = getArrayURLs[i].match(/test_screenshots\/(.+)\.ts/)[1];
@@ -55,12 +84,11 @@ const parseData = (): IParseDate => {
       url: getArrayURLs[i],
     });
   }
-  return sortedScreenshots;
+  return enumerationOfData(sortedScreenshots);
 }
 
 const createStructureSplide = (obj: IGroupParseDate, el: HTMLElement) => {
   const keys = Object.keys(obj);
-
 
   for (let i = 0; i < keys.length; i += 1) {
     // create container item
@@ -163,7 +191,7 @@ const createStructureSplide = (obj: IGroupParseDate, el: HTMLElement) => {
 
     primarySplide.sync(secondarySplide).mount();
     document.addEventListener('', () => {
-     })
+    })
   }
 }
 
@@ -201,7 +229,7 @@ btnParse.addEventListener('click', () => {
   switchActiveBtn(btnTryAgain as HTMLButtonElement, btnParse as HTMLButtonElement);
   switchView(resultField, inputField);
   renderResult(parseData())
-  console.log(parseData())
+  // console.log(parseData())
 })
 
 btnTryAgain.addEventListener('click', () => {
