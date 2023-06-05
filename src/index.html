@@ -1,75 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.sass">
-  <link rel="stylesheet" href="../node_modules/@splidejs/splide/dist/css/themes/splide-default.min.css">
-
-  <title>Parser</title>
+  <title>SP</title>
 </head>
-
 <body>
-  <div class="container">
-    <div class="controller">
-      <button class="actionBtn" type="button" id="actionParse">Parse</button>
-      <button class="actionBtn" type="button" id="actionTruAgain" disabled>Try again</button>
-    </div>
-    <div class="content">
-      <textarea class="result" id="inputField"></textarea>
-      <div class="result" id="resultField" hidden></div>
-    </div>
+  <noscript>You need to enable Javascript to run this application.</noscript>
+  <div id="root">
+    <!-- Your react app will be rendered here -->
   </div>
+  <script src="./index.tsx"></script>
 </body>
-
-<style>
-  html, body, div, span, applet, object, iframe,
-  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-  a, abbr, acronym, address, big, cite, code,
-  del, dfn, em, img, ins, kbd, q, s, samp,
-  small, strike, strong, sub, sup, tt, var,
-  b, u, i, center,
-  dl, dt, dd, ol, ul, li,
-  fieldset, form, label, legend,
-  table, caption, tbody, tfoot, thead, tr, th, td,
-  article, aside, canvas, details, embed, 
-  figure, figcaption, footer, header, hgroup, 
-  menu, nav, output, ruby, section, summary,
-  time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-  }
-  article, aside, details, figcaption, figure, 
-  footer, header, hgroup, menu, nav, section {
-    display: block;
-  }
-  * {
-    box-sizing: border-box
-  }
-  body {
-    line-height: 1;
-  }
-  ol, ul {
-    list-style: none;
-  }
-  blockquote, q {
-    quotes: none;
-  }
-  blockquote:before, blockquote:after,
-  q:before, q:after {
-    content: '';
-    content: none;
-  }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
-</style>
-
-<script src="./index.ts"></script>
 </html>
