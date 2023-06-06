@@ -3,12 +3,23 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom';
+import { CircularProgress, Typography, ThemeProvider } from '@peculiar/react-components';
+import { parseData } from './parser';
+import { responseData } from './parser/text';
 
 export const App: React.FC = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: (<div>Loading</div>),
+      element: (
+        <div>
+          <CircularProgress color="primary" />
+
+          <Typography>
+            Loading
+          </Typography>
+        </div>
+      ),
     },
     {
       path: 'test',
@@ -22,7 +33,11 @@ export const App: React.FC = () => {
     },
   ]);
 
+  console.log(parseData(responseData));
+
   return (
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   );
 };
