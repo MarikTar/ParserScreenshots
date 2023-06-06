@@ -2,18 +2,16 @@ import React from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link,
-} from "react-router-dom";
+} from 'react-router-dom';
 
 export const App: React.FC = () => {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: (<div>Loading</div>),
     },
     {
-      path: "test",
+      path: 'test',
       element: (
         <div className="root">
           <header className="app-header">
@@ -27,4 +25,4 @@ export const App: React.FC = () => {
   return (
     <RouterProvider router={router} />
   );
-}
+};
