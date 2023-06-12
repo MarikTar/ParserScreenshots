@@ -1,4 +1,4 @@
-interface IPageDate {
+export interface IPageDate {
   page: string,
   date: string,
   time: string,
@@ -9,7 +9,7 @@ interface IGroupParseDate {
   [key: string]: IPageDate[];
 }
 
-interface IParseDate {
+export interface IParseDate {
   [key: string]: IGroupParseDate;
 }
 
@@ -27,29 +27,29 @@ const sortFromPage = (arr: IPageDate[]): IPageDate[] => {
   return [...firstArr, ...secArr];
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const enumerationOfData = (obj: IParseDate): IParseDate => {
   const result: IParseDate = {};
 
   Object.keys(obj).forEach((scenariosName) => {
-    const keysOfScenarios = Object.keys(obj[scenariosName]);
+    const scenarios = obj[scenariosName];
+    const keysOfScenarios = Object.keys(scenarios);
 
-    for (let j = 0; j < keysOfScenarios.length; j += 1) {
-      const keyOfDescription = Object.keys(obj[scenariosName])[0];
+    result[scenariosName] = {};
 
-      result[scenariosName][keyOfDescription] = sortFromPage(obj[scenariosName][keyOfDescription]);
-    }
+    keysOfScenarios.forEach(() => {
+      const keyOfDescription = keysOfScenarios[0];
+
+      result[scenariosName][keyOfDescription] = sortFromPage(scenarios[keyOfDescription]);
+    });
   });
 
   return result;
 };
 
-export const parseData = (response: string): IParseDate => {
-  // const input = inputField as HTMLInputElement;
-  const getArrayURLs = response.match(/https:.+\.png/g);
+export const parseData = (response: string[]): IParseDate => {
   const sortedScreenshots: IParseDate = {};
 
-  getArrayURLs?.forEach((url) => {
+  response.forEach((url) => {
     const name = (url.match(/test_screenshots\/(.+)\.ts/)?.[1] || '').trim();
     // eslint-disable-next-line no-useless-escape
     const description = decodeURI((url.match(/\%3E+(.+)_page.+/)?.[1].replace(/%2C/g, ',') || '')).trim();
@@ -74,5 +74,5 @@ export const parseData = (response: string): IParseDate => {
     });
   });
 
-  return sortedScreenshots;
+  return enumerationOfData(sortedScreenshots);
 };
