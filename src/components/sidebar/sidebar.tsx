@@ -1,40 +1,25 @@
 import React from 'react';
-import {
-  Slide,
-  Box,
-  Button,
-  Typography,
-} from '@peculiar/react-components';
+import { Box } from '@peculiar/react-components';
 import * as s from './sidebar.module.scss';
 
 type SidebarProps = {
-
+  children?: React.ReactNode
 };
 
-export const Sidebar: React.FC<SidebarProps> = () => {
-  const [open, setOpen] = React.useState(true);
+export const Sidebar: React.FC<SidebarProps> = (props) => {
+  const { children } = props;
 
   return (
-    <div className={s.root}>
-      <Box
-        in={open}
-        direction="left"
-        component={Slide}
-        className={s.slider}
-        background="primary"
-      >
-        <Typography color="wrong-shade-1">
-          test
-        </Typography>
-      </Box>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => { setOpen((prev) => !prev); }}
-      >
-        Open
-      </Button>
-    </div>
+    <Box
+      component="aside"
+      className={s.root}
+      background="gray-2"
+      borderColor="gray-4"
+      borderStyle="solid"
+      borderPosition="right"
+      borderWidth={2}
+    >
+      {children}
+    </Box>
   );
 };

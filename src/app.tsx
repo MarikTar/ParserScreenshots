@@ -5,17 +5,16 @@ import {
 } from 'react-router-dom';
 import {
   CircularProgress,
-  Typography,
   ThemeProvider,
   Box,
   ThemeOptionsType,
   TypographyType,
   TypographyPropertiesType,
 } from '@peculiar/react-components';
-import { Sidebar } from './components';
+import { Sidebar, SidebarItem } from './components';
 import { parseData, IParseDate } from './parser';
 import { responseData } from './parser/text';
-// import s from './app.module.scss';
+import * as s from './app.module.scss';
 
 const palette: ThemeOptionsType['color'] = {
   primary: '#0049DB',
@@ -52,7 +51,7 @@ const Content = () => {
   const [loading, setLoading] = React.useState(true);
 
   const getData = async (): Promise<string[]> => new Promise((res) => {
-    setTimeout(() => { res(responseData); }, 100);
+    setTimeout(() => { res(responseData); }, 200);
   });
 
   React.useEffect(() => {
@@ -69,37 +68,60 @@ const Content = () => {
 
   if (loading) {
     return (
-      <div>
-        <CircularProgress color="primary" />
-
-        <Typography>
-          Loading
-        </Typography>
+      <div className={s.root}>
+        <div className={s.loading}>
+          <CircularProgress
+            color="primary"
+            size="large"
+          />
+        </div>
       </div>
     );
   }
 
-  const renderContent = () => Object.keys(data).map((testNumber) => {
-    const group = data[testNumber];
-
-    return (
-      <Box
-        key={Object.keys(group)[0]}
-        borderColor="gray-9"
-        borderStyle="solid"
-        borderWidth={1}
-      >
-        <Typography>
-          {testNumber}
-        </Typography>
-      </Box>
-    );
-  });
-
   return (
-    <div>
-      <Sidebar />
-      {renderContent()}
+    <div className={s.root}>
+      <Sidebar>
+        <nav>
+          <ul>
+            {Object.keys(data).map((testGroupName) => {
+              const group = data[testGroupName];
+
+              return (
+                <SidebarItem
+                  key={testGroupName}
+                  title={testGroupName}
+                  list={group}
+                />
+              );
+            })}
+          </ul>
+        </nav>
+      </Sidebar>
+      <main className={s.main}>
+        <Box
+          component="header"
+          background="gray-2"
+          className={s.header}
+        >
+          header
+        </Box>
+
+        <div className={s.image_wrapper}>
+          test
+        </div>
+
+        <Box
+          background="gray-1"
+          borderColor="gray-3"
+          borderStyle="solid"
+          borderPosition="top"
+          borderWidth={1}
+          className={s.footer_navigation}
+        >
+          test
+        </Box>
+      </main>
     </div>
   );
 };
@@ -111,7 +133,7 @@ export const App: React.FC = () => {
       element: (<Content />),
     },
     {
-      path: 'test',
+      path: '/test',
       element: (
         <div className="root">
           <header className="app-header">

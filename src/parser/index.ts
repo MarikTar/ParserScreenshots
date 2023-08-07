@@ -5,7 +5,7 @@ export interface IPageDate {
   url: string,
 }
 
-interface IGroupParseDate {
+export interface IGroupParseDate {
   [key: string]: IPageDate[];
 }
 

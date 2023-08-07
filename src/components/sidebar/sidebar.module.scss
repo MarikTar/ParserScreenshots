@@ -1,8 +1,7 @@
 .root {
   display: flex;
-}
-
-.slider {
-  width: 300px;
-  background-color: red;
+  width: 25%;
+  min-width: 300px;
+  padding: 30px 10px;
+  flex-direction: column;
 }
