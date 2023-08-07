@@ -4,10 +4,48 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import {
-  CircularProgress, Typography, ThemeProvider, Box,
+  CircularProgress,
+  Typography,
+  ThemeProvider,
+  Box,
+  ThemeOptionsType,
+  TypographyType,
+  TypographyPropertiesType,
 } from '@peculiar/react-components';
+import { Sidebar } from './components';
 import { parseData, IParseDate } from './parser';
 import { responseData } from './parser/text';
+// import s from './app.module.scss';
+
+const palette: ThemeOptionsType['color'] = {
+  primary: '#0049DB',
+  secondary: '#00A4B5',
+  wrong: '#EB3638',
+  attention: '#F0B400',
+  success: '#1CBA75',
+  'extra-1': '#7B00FF',
+};
+
+const text: Partial<Record<TypographyType, TypographyPropertiesType>> = {
+  h2: {
+    weight: '800',
+    size: '35px',
+    height: '45px',
+    spacing: '0.1px',
+  },
+  h1: {
+    weight: '700',
+    size: '70px',
+    height: '90px',
+    spacing: '0.1px',
+  },
+  h3: {
+    weight: '800',
+    size: '27px',
+    height: '35px',
+    spacing: '0.1px',
+  },
+};
 
 const Content = () => {
   const [data, setData] = React.useState<IParseDate>({});
@@ -44,10 +82,9 @@ const Content = () => {
   const renderContent = () => Object.keys(data).map((testNumber) => {
     const group = data[testNumber];
 
-    console.log({ group, data });
-
     return (
       <Box
+        key={Object.keys(group)[0]}
         borderColor="gray-9"
         borderStyle="solid"
         borderWidth={1}
@@ -61,6 +98,7 @@ const Content = () => {
 
   return (
     <div>
+      <Sidebar />
       {renderContent()}
     </div>
   );
@@ -85,7 +123,7 @@ export const App: React.FC = () => {
   ]);
 
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={{ color: palette, text }}>
       <RouterProvider router={router} />
     </ThemeProvider>
   );

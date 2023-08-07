@@ -28,22 +28,19 @@ const sortFromPage = (arr: IPageDate[]): IPageDate[] => {
 };
 
 const enumerationOfData = (obj: IParseDate): IParseDate => {
-  const result: IParseDate = {};
-
   Object.keys(obj).forEach((scenariosName) => {
     const scenarios = obj[scenariosName];
     const keysOfScenarios = Object.keys(scenarios);
 
-    result[scenariosName] = {};
-
     keysOfScenarios.forEach(() => {
       const keyOfDescription = keysOfScenarios[0];
 
-      result[scenariosName][keyOfDescription] = sortFromPage(scenarios[keyOfDescription]);
+      // eslint-disable-next-line no-param-reassign
+      obj[scenariosName][keyOfDescription] = sortFromPage(scenarios[keyOfDescription]);
     });
   });
 
-  return result;
+  return obj;
 };
 
 export const parseData = (response: string[]): IParseDate => {

@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  min-height: 100%;
+  width: 100%;
+  min-width: 320px;
+  top: 0;
+  left: 0;
+  font-size: 0;
+}
+
+#__next {
+  height: 100%;
+}
+
+body {
+  --pv-color-aquamarine: #6EFFDC;
+  --pv-color-aquamarine-tint-5: #e5fff9;
+  --pv-color-aquamarine-tint-4: #cefff3;
+  --pv-color-aquamarine-tint-3: #b7ffee;
+  --pv-color-aquamarine-tint-2: #9effe8;
+  --pv-color-aquamarine-tint-1: #87ffe3;
+  --pv-shadow-soft: 0px 1px 8px -2px #555e6208, 0px 5px 10px 0.2px #555e6208, 0px 15px 20px 0.2px #555e620d;
+}
+
+[data-right-menu-open="true"] {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  word-break: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
+  outline-color: #c4d8f7;
+  text-decoration: none;
+}
+
+#__next {
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+li {
+  list-style-type: none;
+}
+
+textarea {
+  resize: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+.preloader {
+  background: red;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+
+.show {
+  opacity: 1;
+}

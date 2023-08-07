@@ -2,7 +2,6 @@
   "name": "ParserScreenshots",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "start": "parcel ./src/index.html",
     "build": "rm -rf dist && parcel build ./src/index.html --public-url /ParserScreenshots",
@@ -20,15 +19,15 @@
   },
   "homepage": "https://github.com/MarikTar/ParserScreenshots#readme",
   "dependencies": {
-    "@peculiar/react-components": "^0.2.1",
-    "parcel": "2.9.1",
+    "@peculiar/react-components": "0.3.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.11.2"
   },
   "devDependencies": {
-    "@types/react": "^18.2.8",
-    "@types/react-dom": "^18.2.4",
+    "@parcel/transformer-sass": "2.9.3",
+    "@types/react": "18.2.8",
+    "@types/react-dom": "18.2.4",
     "@types/react-router-dom": "5.3.3",
     "@typescript-eslint/eslint-plugin": "5.38.1",
     "@typescript-eslint/parser": "5.38.1",
@@ -40,8 +39,9 @@
     "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-react": "7.31.8",
     "eslint-plugin-react-hooks": "4.6.0",
-    "parcel-bundler": "^1.12.5",
-    "sass": "1.62.1",
-    "typescript": "^5.1.3"
+    "parcel": "2.9.3",
+    "process": "0.11.10",
+    "typed-scss-modules": "7.1.2",
+    "typescript": "5.1.6"
   }
 }
