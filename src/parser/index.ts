@@ -52,7 +52,7 @@ export const parseData = (response: string[]): IParseDate => {
     const description = decodeURI((url.match(/\%3E+(.+)_page.+/)?.[1].replace(/%2C/g, ',') || '')).trim();
     // eslint-disable-next-line no-useless-escape
     const time = url.match(/.+T(..\%3A..\%3A..).+/)?.[1] || '';
-    const date = url.match(/time_(.+)T/)?.[1] || '';
+    const date = url.match(/time_(....-..-..)T/)?.[1] || '';
     const page = url.match(/.+_page_(.+)_time.+/)?.[1] || '';
 
     if (!sortedScreenshots[name]) {
@@ -67,7 +67,7 @@ export const parseData = (response: string[]): IParseDate => {
       page,
       date,
       time: time.replace(/%3A/g, ':'),
-      url,
+      url: url.match(/https:.+\.png/g).toString() || '',
     });
   });
 

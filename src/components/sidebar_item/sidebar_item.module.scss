@@ -1,4 +1,4 @@
-.title_wrapper{
+.title_wrapper {
   display: flex;
   justify-content: space-between;
   column-gap: 10px;
@@ -17,5 +17,18 @@
 }
 
 .list {
-  padding: 5px 30px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  padding: 5px 10px;
+}
+
+.list_item {
+  width: 100%;
+  white-space: pre-wrap;
+  height: auto;
+
+  &[data-active="true"] {
+    background: var(--pv-color-gray-3);
+  }
 }

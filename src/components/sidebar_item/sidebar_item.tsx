@@ -4,17 +4,20 @@ import {
   IconButton,
   Collapse,
   Typography,
+  Button,
 } from '@peculiar/react-components';
+import { Link } from 'react-router-dom';
 import { IGroupParseDate } from '../../parser';
 import * as s from './sidebar_item.module.scss';
 
 type SidebarItemProps = {
   title: string;
+  currentHash: string;
   list: IGroupParseDate;
 };
 
 export const SidebarItem: React.FC<SidebarItemProps> = (props) => {
-  const { title, list } = props;
+  const { title, list, currentHash } = props;
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -55,12 +58,18 @@ export const SidebarItem: React.FC<SidebarItemProps> = (props) => {
 
       <Collapse in={open}>
         <ul className={s.list}>
-          {Object.keys(list).map((testName) => (
-            <li>
-              <Typography>
-                {testName}
-              </Typography>
-            </li>
+          {Object.keys(list).map((testCaseName) => (
+            <Button
+              key={testCaseName}
+              component={Link}
+              to={{ hash: testCaseName }}
+              className={s.list_item}
+              data-active={currentHash === testCaseName}
+              size="small"
+              textVariant="c1"
+            >
+              {testCaseName}
+            </Button>
           ))}
         </ul>
       </Collapse>
