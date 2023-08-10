@@ -33,7 +33,10 @@ export const SidebarItem: React.FC<SidebarItemProps> = (props) => {
         className={s.title_wrapper}
         htmlFor={title}
       >
-        <Typography variant="b3">
+        <Typography
+          variant="b3"
+          className={s.title}
+        >
           {title}
         </Typography>
 

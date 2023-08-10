@@ -18,6 +18,8 @@ import {
   Chip,
   Image,
   IconButton,
+  useMediaQuery,
+  Drawer,
 } from '@peculiar/react-components';
 import { useCarousel } from 'use-carousel-hook';
 import { Sidebar, SidebarItem } from './components';
@@ -63,7 +65,8 @@ const Content = () => {
   const [data, setData] = React.useState<IParseDate>({});
   const [loading, setLoading] = React.useState(false);
   const prepare = React.useRef<Record<string, IPageDate[]>>({});
-
+  const [open, setOpen] = React.useState(false);
+  const isMobile = useMediaQuery('(max-width: 768px)');
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const navigation = useNavigate();
@@ -75,12 +78,9 @@ const Content = () => {
     next,
     setCurrent,
     current,
-    inView,
     position,
     reset,
   } = useCarousel<HTMLUListElement>();
-
-  console.log({ current, inView, position });
 
   React.useEffect(() => {
     if (resourceURL) {
@@ -129,49 +129,85 @@ const Content = () => {
     );
   }
 
+  const renderSidebar = () => (
+    <Sidebar>
+      <nav>
+        <ul>
+          {Object.keys(data).map((testGroupName) => {
+            const group = data[testGroupName];
+
+            return (
+              <SidebarItem
+                key={testGroupName}
+                title={testGroupName}
+                list={group}
+                currentHash={hash}
+              />
+            );
+          })}
+        </ul>
+      </nav>
+    </Sidebar>
+  );
+
   return (
     <div className={s.root}>
-      <Sidebar>
-        <nav>
-          <ul>
-            {Object.keys(data).map((testGroupName) => {
-              const group = data[testGroupName];
-
-              return (
-                <SidebarItem
-                  key={testGroupName}
-                  title={testGroupName}
-                  list={group}
-                  currentHash={hash}
-                />
-              );
-            })}
-          </ul>
-        </nav>
-      </Sidebar>
+      {!isMobile ? (
+        <div className={s.sidebar}>
+          {renderSidebar()}
+        </div>
+      ) : null}
       <main className={s.main}>
         <Box
           component="header"
           background="gray-2"
           className={s.header}
         >
-          <Typography variant="h5">
+          <Typography
+            variant={isMobile ? 's2' : 'h5'}
+          >
             {hash}
           </Typography>
+          {isMobile ? (
+            <>
+              <IconButton
+                id="prev"
+                size="large"
+                onClick={() => setOpen(true)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path fill="currentColor" d="M6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm5-15h8c.55 0 1 .45 1 1s-.45 1-1 1h-8c-.55 0-1-.45-1-1s.45-1 1-1Zm0 6h8c.55 0 1 .45 1 1s-.45 1-1 1h-8c-.55 0-1-.45-1-1s.45-1 1-1Zm0 6h8c.55 0 1 .45 1 1s-.45 1-1 1h-8c-.55 0-1-.45-1-1s.45-1 1-1Z" />
+                </svg>
+              </IconButton>
+
+              <Drawer
+                open={open}
+                onClose={() => setOpen(false)}
+                className={s.drawer}
+              >
+                {renderSidebar()}
+              </Drawer>
+            </>
+          ) : null}
         </Box>
 
         <div className={s.image_wrapper} key={hash}>
           <Box
             component="label"
             htmlFor="prev"
-            className={s.previous_button_wrapper}
+            className={s.previous_button}
           >
             <IconButton
               id="prev"
               size="large"
               onClick={() => previous()}
               circled
-              className={s.previous_button}
               disabled={position.isAtStart}
             >
               <svg
