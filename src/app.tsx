@@ -4,7 +4,6 @@ import {
   RouterProvider,
   useLocation,
   useSearchParams,
-  // useParams,
   useNavigate,
 } from 'react-router-dom';
 import {
@@ -123,8 +122,21 @@ const Content = () => {
 
   if (!data || !prepare.current[hash]) {
     return (
-      <div>
-        empty
+      <div className={s.root}>
+        <div className={s.loading}>
+          <Typography
+            variant="s2"
+            color="primary"
+          >
+            Ops, data was loose.
+          </Typography>
+
+          <Typography
+            variant="b3"
+          >
+            Please contact the backendovich.
+          </Typography>
+        </div>
       </div>
     );
   }
@@ -357,16 +369,6 @@ export const App: React.FC = () => {
     {
       path: '/',
       element: (<Content />),
-    },
-    {
-      path: '/test2',
-      element: (
-        <div className="root">
-          <header className="app-header">
-            Test
-          </header>
-        </div>
-      ),
     },
   ]);
 
