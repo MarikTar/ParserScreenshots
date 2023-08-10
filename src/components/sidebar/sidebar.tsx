@@ -11,7 +11,7 @@ export const Sidebar: React.FC<SidebarProps> = (props) => {
 
   return (
     <Box
-      component="aside"
+      component="nav"
       className={s.root}
       background="gray-2"
       borderColor="gray-4"

@@ -1,4 +1,4 @@
-export interface IPageDate {
+export interface IPageData {
   page: string,
   date: string,
   time: string,
@@ -6,14 +6,14 @@ export interface IPageDate {
 }
 
 export interface IGroupParseDate {
-  [key: string]: IPageDate[];
+  [key: string]: IPageData[];
 }
 
 export interface IParseDate {
   [key: string]: IGroupParseDate;
 }
 
-const sortFromPage = (arr: IPageDate[]): IPageDate[] => {
+const sortFromPage = (arr: IPageData[]): IPageData[] => {
   const firstArr = [];
   const secArr = [];
 

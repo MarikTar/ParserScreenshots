@@ -14,15 +14,18 @@ import {
   TypographyType,
   TypographyPropertiesType,
   Typography,
-  Chip,
   Image,
   IconButton,
   useMediaQuery,
-  Drawer,
 } from '@peculiar/react-components';
 import { useCarousel } from 'use-carousel-hook';
-import { Sidebar, SidebarItem } from './components';
-import { parseData, IParseDate, IPageDate } from './parser';
+import {
+  Sidebar,
+  SidebarItem,
+  Header,
+  FooterNavigation,
+} from './components';
+import { parseData, IParseDate, IPageData } from './parser';
 import { responseData } from './parser/text';
 import * as s from './app.module.scss';
 
@@ -63,8 +66,7 @@ const getData = async (): Promise<string[]> => new Promise((res) => {
 const Content = () => {
   const [data, setData] = React.useState<IParseDate>({});
   const [loading, setLoading] = React.useState(false);
-  const prepare = React.useRef<Record<string, IPageDate[]>>({});
-  const [open, setOpen] = React.useState(false);
+  const prepare = React.useRef<Record<string, IPageData[]>>({});
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [searchParams] = useSearchParams();
   const location = useLocation();
@@ -120,7 +122,9 @@ const Content = () => {
     );
   }
 
-  if (!data || !prepare.current[hash]) {
+  const currentData = prepare.current[hash];
+
+  if (!data || !currentData) {
     return (
       <div className={s.root}>
         <div className={s.loading}>
@@ -134,7 +138,7 @@ const Content = () => {
           <Typography
             variant="b3"
           >
-            Please contact the backendovich.
+            Please contact the Backendovich.
           </Typography>
         </div>
       </div>
@@ -143,70 +147,31 @@ const Content = () => {
 
   const renderSidebar = () => (
     <Sidebar>
-      <nav>
-        <ul>
-          {Object.keys(data).map((testGroupName) => {
-            const group = data[testGroupName];
-
-            return (
-              <SidebarItem
-                key={testGroupName}
-                title={testGroupName}
-                list={group}
-                currentHash={hash}
-              />
-            );
-          })}
-        </ul>
-      </nav>
+      <ul>
+        {Object.keys(data).map((testGroupName) => (
+          <SidebarItem
+            key={testGroupName}
+            title={testGroupName}
+            list={data[testGroupName]}
+            currentHash={hash}
+          />
+        ))}
+      </ul>
     </Sidebar>
   );
 
   return (
     <div className={s.root}>
       {!isMobile ? (
-        <div className={s.sidebar}>
+        <aside className={s.sidebar}>
           {renderSidebar()}
-        </div>
+        </aside>
       ) : null}
-      <main className={s.main}>
-        <Box
-          component="header"
-          background="gray-2"
-          className={s.header}
-        >
-          <Typography
-            variant={isMobile ? 's2' : 'h5'}
-          >
-            {hash}
-          </Typography>
-          {isMobile ? (
-            <>
-              <IconButton
-                size="large"
-                onClick={() => setOpen(true)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path fill="currentColor" d="M6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm5-15h8c.55 0 1 .45 1 1s-.45 1-1 1h-8c-.55 0-1-.45-1-1s.45-1 1-1Zm0 6h8c.55 0 1 .45 1 1s-.45 1-1 1h-8c-.55 0-1-.45-1-1s.45-1 1-1Zm0 6h8c.55 0 1 .45 1 1s-.45 1-1 1h-8c-.55 0-1-.45-1-1s.45-1 1-1Z" />
-                </svg>
-              </IconButton>
 
-              <Drawer
-                open={open}
-                onClose={() => setOpen(false)}
-                className={s.drawer}
-              >
-                {renderSidebar()}
-              </Drawer>
-            </>
-          ) : null}
-        </Box>
+      <main className={s.main}>
+        <Header title={hash}>
+          {renderSidebar()}
+        </Header>
 
         <div className={s.image_wrapper} key={hash}>
           <Box
@@ -244,7 +209,7 @@ const Content = () => {
             background="gray-1"
             borderRadius={4}
           >
-            {prepare.current[hash].map((item, index) => (
+            {currentData.map((item, index) => (
               <li
                 className={s.carousel_item}
                 // eslint-disable-next-line react/no-array-index-key
@@ -294,71 +259,21 @@ const Content = () => {
           <Typography
             variant="s2"
           >
-            {`Time: ${prepare.current[hash][current].time}`}
+            {`Time: ${currentData[current].time}`}
           </Typography>
 
           <Typography
             variant="s2"
           >
-            {`Date: ${prepare.current[hash][current].date}`}
+            {`Date: ${currentData[current].date}`}
           </Typography>
         </div>
 
-        <Box
-          background="gray-1"
-          borderColor="gray-3"
-          borderStyle="solid"
-          borderPosition="top"
-          borderWidth={1}
-          className={s.footer_navigation}
-        >
-          {prepare.current[hash].map((item, index) => {
-            const isCurrent = index === current;
-
-            return [
-              index && !Number(item.page) ? (
-                <Typography
-                  key="divider"
-                  variant="s2"
-                  className={s.divider}
-                >
-                  Re-run
-                </Typography>
-              ) : null,
-              (
-                <Box
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={`${item.url}-${index}`}
-                  component={Chip}
-                  onClick={() => setCurrent(index)}
-                  color={isCurrent ? 'secondary' : 'default'}
-                  variant="outlined"
-                  className={s.preview_item}
-                  borderRadius={4}
-                  borderWidth={1}
-                >
-                  <Box
-                    borderRadius={4}
-                    borderWidth={1}
-                    borderColor="gray-4"
-                    borderStyle="solid"
-                    component={Image}
-                    src={item.url}
-                    alt={item.time}
-                    className={s.preview_image}
-                  />
-
-                  <Typography
-                    variant="c2"
-                    className={s.preview_description}
-                  >
-                    {`Page: ${item.page}`}
-                  </Typography>
-                </Box>
-              ),
-            ];
-          })}
-        </Box>
+        <FooterNavigation
+          pageData={currentData}
+          currentNumber={current}
+          onClick={setCurrent}
+        />
       </main>
     </div>
   );
