@@ -171,7 +171,6 @@ const Content = () => {
           {isMobile ? (
             <>
               <IconButton
-                id="prev"
                 size="large"
                 onClick={() => setOpen(true)}
               >
