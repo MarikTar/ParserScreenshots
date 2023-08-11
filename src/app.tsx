@@ -26,7 +26,6 @@ import {
   FooterNavigation,
 } from './components';
 import { parseData, IParseDate, IPageData } from './parser';
-import { responseData } from './parser/text';
 import * as s from './app.module.scss';
 
 const palette: ThemeOptionsType['color'] = {
@@ -59,10 +58,6 @@ const text: Partial<Record<TypographyType, TypographyPropertiesType>> = {
   },
 };
 
-const getData = async (): Promise<string[]> => new Promise((res) => {
-  setTimeout(() => { res(responseData); }, 2000);
-});
-
 const Content = () => {
   const [data, setData] = React.useState<IParseDate>({});
   const [loading, setLoading] = React.useState(false);
@@ -86,9 +81,11 @@ const Content = () => {
   React.useEffect(() => {
     if (resourceURL) {
       setLoading(true);
-      getData()
-        .then((response) => {
-          const parsedData = parseData(response);
+      fetch(resourceURL)
+        .then((response) => response.text())
+        .then((responseData) => {
+          const json = JSON.parse(responseData);
+          const parsedData = parseData(json);
 
           Object.values(parsedData).forEach((testCases) => {
             Object.keys(testCases).forEach((testCaseName) => {
@@ -96,10 +93,9 @@ const Content = () => {
             });
           });
 
-          console.log(parsedData);
           setData(parsedData);
         })
-        .catch(console.log)
+        .catch(console.warn)
         .finally(() => {
           setLoading(false);
           navigation(`#${Object.keys(prepare.current)[0]}`, { replace: true });
@@ -138,7 +134,7 @@ const Content = () => {
           <Typography
             variant="b3"
           >
-            Please contact the Backendovich.
+            Please contact the Backendych.
           </Typography>
         </div>
       </div>
