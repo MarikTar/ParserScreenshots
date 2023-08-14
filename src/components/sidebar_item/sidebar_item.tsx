@@ -7,7 +7,7 @@ import {
   Button,
 } from '@peculiar/react-components';
 import { Link } from 'react-router-dom';
-import { IGroupParseDate } from '../../parser';
+import { IGroupParseDate } from '../../utils';
 import * as s from './sidebar_item.module.scss';
 
 type SidebarItemProps = {

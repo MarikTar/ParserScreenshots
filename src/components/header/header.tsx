@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   Drawer,
 } from '@peculiar/react-components';
+import { mediaQueries } from '../../constants';
 import * as s from './header.module.scss';
 
 type HeaderProps = {
@@ -16,7 +17,7 @@ type HeaderProps = {
 export const Header: React.FC<HeaderProps> = (props) => {
   const { title, children } = props;
   const [open, setOpen] = React.useState(false);
-  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isMobile = useMediaQuery(mediaQueries.TABLET);
 
   return (
     <Box

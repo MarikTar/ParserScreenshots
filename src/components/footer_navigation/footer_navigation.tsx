@@ -6,7 +6,7 @@ import {
   Image,
 } from '@peculiar/react-components';
 import * as s from './footer_navigation.module.scss';
-import { IPageData } from '../../parser';
+import { IPageData } from '../../utils';
 
 type FooterNavigationProps = {
   pageData: IPageData[];
