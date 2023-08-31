@@ -30,7 +30,7 @@ export const FooterNavigation: React.FC<FooterNavigationProps> = (props) => {
         const isCurrent = index === currentNumber;
 
         return [
-          index && !Number(item.page) ? (
+          index && Number(item.page) === 1 ? (
             <Typography
               key="divider"
               variant="s2"

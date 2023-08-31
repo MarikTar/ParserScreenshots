@@ -19,6 +19,7 @@ type SidebarItemProps = {
 export const SidebarItem: React.FC<SidebarItemProps> = (props) => {
   const { title, list, currentHash } = props;
   const [open, setOpen] = React.useState(false);
+  const isSelected = Object.keys(list).includes(currentHash);
 
   return (
     <Box
@@ -32,6 +33,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = (props) => {
       <label
         className={s.title_wrapper}
         htmlFor={title}
+        data-active={isSelected}
       >
         <Typography
           variant="b3"
